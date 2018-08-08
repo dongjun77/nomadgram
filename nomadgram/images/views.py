@@ -17,7 +17,11 @@ class ListAllComments(APIView):
 
     def get(self, request, format=None):
 
-        all_comments = models.Comment.objects.all()
+        # all_comments = models.Comment.objects.filter(creator=2)
+        # all_comments = models.Comment.objects.all()
+        user_id = request.user.id
+
+        all_comments = models.Comment.objects.filter(creator=user_id)
 
         serializer = serializers.CommentSerializer(all_comments, many=True)
 
@@ -28,7 +32,11 @@ class ListAllLikes(APIView):
 
     def get(self, request, format=None):
 
+        # print(request.scheme)
+
         all_likes = models.Like.objects.all()
+
+        # print(request.user.website)
 
         serializer = serializers.LikeSerializer(all_likes, many=True)
 
